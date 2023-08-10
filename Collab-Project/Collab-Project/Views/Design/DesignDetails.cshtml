@@ -1,0 +1,163 @@
+﻿﻿@model Collab_Project.Models.ViewModels.DesignDetails
+
+
+@{
+    ViewBag.Title = "View";
+}
+
+
+
+<nav>
+    <ul>
+
+        <li><a class="btn"href="/Design/ListDesigns">Go back to list</a></li>
+
+        <li><a class="btn"href="/Design/Edit/@Model.SelectedDesign.Design_Id">Update</a></li>
+
+        <li>
+           <a class="delete" style="color:#ab2020;" href="/Design/DeleteConfirm/@Model.SelectedDesign.Design_Id">Delete</a>
+        </li>
+
+    </ul>
+</nav>
+
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+
+
+    </div>
+    <div class="col-md-6 col-sm-12 test">
+        <h3>@(Model.SelectedDesign.Architect_Name)</h3>
+        <p>@Model.SelectedDesign.Description</p>
+        <p>@Model.SelectedDesign.Drawing_Plan</p>
+        <p>@Model.SelectedDesign.TrailName</p>
+       
+    </div>
+    </div>
+
+
+
+
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        h2 {
+            color: #006400;
+            margin-bottom: 20px;
+        }
+
+        h4 {
+            color: #006400;
+            margin-bottom: 10px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .col-md-6 {
+            width: 50%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #d3e5d8;
+            color: #006400;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+            .btn:hover {
+                background-color: #b1d2ac;
+            }
+
+        .nav {
+            margin-bottom: 20px;
+        }
+
+            .nav ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .nav li {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+        .back a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #d3e5d8;
+            color: #006400;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+            .back a:hover {
+                background-color: #b1d2ac;
+            }
+
+        .update a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #d3e5d8;
+            color: #006400;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+            .update a:hover {
+                background-color: #b1d2ac;
+            }
+
+        .delete a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e8c6c6;
+            color: #ab2020;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+            .delete a:hover {
+                background-color: #dca5a5;
+            }
+
+        .location-div {
+            margin-top: 10px;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+    </style>

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Collab_Project.Models.LocationDto>
+
+@{
+    ViewBag.Title = "NewTrail";
+}
+
+<h2>Add Trail</h2>
+
+<form action="/Trail/PostNewTrail" method="POST">
+
+    <div>
+        <label>Trail Name:</label><input name="TrailName" type="text" />
+    </div>
+
+    <div>
+        <label>Locations:</label>
+        <select name="LocationID">
+
+            @foreach (var location in @Model)
+            {
+                <option value="@location.LocationID">@location.LocationName</option>
+
+            }
+        </select>
+    </div>
+
+   
+
+
+    <div>
+        <input type="submit" value="Add Trail" />
+    </div>
+
+</form>
+
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    h2 {
+        color: #006400;
+        margin-bottom: 20px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d3e5d8;
+        color: #006400;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+        .btn:hover {
+            background-color: #b1d2ac;
+        }
+</style>

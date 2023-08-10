@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Collab_Project.Models.LocationDto>
+@{
+    ViewBag.Title = "ListLocations";
+}
+
+<h1>List Locations</h1>
+
+@if (User.IsInRole("Admin"))
+{
+    <a href="/Trail/NewTrail">New Location</a>
+}
+
+@foreach (var location in Model)
+{
+
+    <h3><a href="/Location/LocationDetails/@location.LocationID">@location.LocationName</a></h3>
+
+}
+
+
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        color: #333;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #006400;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        color: #006400;
+        margin-bottom: 10px;
+    }
+
+    a {
+        color: #006400;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: #ab2020;
+        }
+</style>

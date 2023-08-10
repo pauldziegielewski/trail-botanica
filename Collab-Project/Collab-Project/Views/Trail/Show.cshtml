@@ -1,0 +1,214 @@
+﻿@model Collab_Project.Models.ViewModels.TrailDetails
+
+@{
+    ViewBag.Title = "View";
+}
+
+
+<h2>@Model.SelectedTrail.TrailName</h2>
+
+
+<nav class="nav">
+    <ul>
+
+        <li class="back"><a href="/Trail/List">Go back to list</a></li>
+        @{
+            if (Model.IsAdmin)
+            {
+                <li class="update"><a href="/Trail/Edit/@Model.SelectedTrail.TrailID">Update</a></li>
+
+                <li class="delete"><a style="color:#ab2020;" href="/Trail/DeleteConfirm/@Model.SelectedTrail.TrailID">Delete</a></li>
+            }
+        }
+
+
+    </ul>
+</nav>
+
+
+<div class="row">
+
+    <div class="col-md-6 col-sm-12">
+
+        @{ string imageurl = "/Content/Images/Trails/default.jpg";
+                        if (Model.SelectedTrail.TrailHasPic)
+                        {
+                            imageurl = "/Content/Images/Trails/" + Model.SelectedTrail.TrailID + "." + Model.SelectedTrail.PicExtension;
+                        } }
+
+        <div>
+            <img style="display:block; max-width:100%;" alt="@Model.SelectedTrail.TrailName" src="@imageurl" />
+        </div>
+
+        <a href="@Url.Action("LocationDetails", "Location", new { id = Model.SelectedTrail.LocationID })">@Model.SelectedTrail.LocationName</a>
+
+    </div>
+    <div>
+        <h2>Plants in this trail @Model.SelectedTrail.TrailName</h2>
+        @foreach (var plant in Model.AvailablePlants)
+        {
+<a href="/Plant/Details/@plant.Plant_Id">@plant.Plant_Name</a>            }
+    </div>
+
+    <div>
+        <h2>Features in this trail @Model.SelectedTrail.TrailName</h2>
+        @foreach (var feature in Model.AvailableFeatures)
+        {
+<a href="/Feature/Details/@feature.FeatureID">@feature.FeatureName</a>            }
+    </div>
+
+    <div>
+        Add new Feature @Model.SelectedTrail.TrailName
+        <select name="FeatureID">
+            @foreach (var feature in Model.AFeatures)
+            {
+<option value="@feature.FeatureID">@feature.FeatureName</option>            }
+        </select>
+        <input type="submit" value="Associate Feature" />
+    </div>
+
+
+    <div class="col-md-6 col-sm-12">
+        <h4>Trails in this location: @Model.SelectedTrail.TrailName</h4>
+
+
+        <div>
+
+            <form method="POST" action="/Trail/Associate/@Model.SelectedTrail.TrailID">
+                <select name="FeatureID">
+                    <option value="">Select Feature</option>
+
+                </select>
+                <input type="submit" value="Add Feature" />
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    h2 {
+        color: #006400;
+        margin-bottom: 20px;
+    }
+
+    h4 {
+        color: #006400;
+        margin-bottom: 10px;
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .col-md-6 {
+        width: 50%;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d3e5d8;
+        color: #006400;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+        .btn:hover {
+            background-color: #b1d2ac;
+        }
+
+    .nav {
+        margin-bottom: 20px;
+    }
+
+        .nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .nav li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+    .back a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d3e5d8;
+        color: #006400;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+        .back a:hover {
+            background-color: #b1d2ac;
+        }
+
+    .update a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #d3e5d8;
+        color: #006400;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+        .update a:hover {
+            background-color: #b1d2ac;
+        }
+
+    .delete a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #e8c6c6;
+        color: #ab2020;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+
+        .delete a:hover {
+            background-color: #dca5a5;
+        }
+
+    .location-div {
+        margin-top: 10px;
+    }
+
+    form {
+        margin-top: 10px;
+    }
+
+    select {
+        width: 100%;
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+</style>

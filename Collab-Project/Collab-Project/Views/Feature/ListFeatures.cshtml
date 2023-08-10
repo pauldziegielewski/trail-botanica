@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Collab_Project.Models.FeatureDto>
+@{
+    ViewBag.Title = "ListFeatures";
+}
+
+<h1>List Features</h1>
+
+@if (User.IsInRole("Admin"))
+{
+   <a href="/Feature/NewFeature">New Feature</a>
+}
+
+@foreach (var feature in Model)
+{
+    <h4><a href="/Feature/Details/@feature.FeatureID">@feature.FeatureName</a></h4>
+
+}
+
+
+
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    h1 {
+        color: #006400;
+        margin-bottom: 20px;
+    }
+
+    h4 {
+        color: #006400;
+        margin-bottom: 10px;
+    }
+
+    a {
+        color: #006400;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: #ab2020;
+        }
+</style>
+

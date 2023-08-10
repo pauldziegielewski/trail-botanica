@@ -1,0 +1,129 @@
+﻿@model Collab_Project.Models.ViewModel.PlantDetails
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h2>@Model.SelectedPlant.Plant_Name</h2>
+
+    <nav>
+        <ul>
+
+            <li><a class="btn" href="/Plant/ListPlants">Go back to list</a></li>
+
+
+            @{ 
+                if (Model.IsAdmin) {
+
+            <li><a class="btn"href="/Plant/Edit/@Model.SelectedPlant.Plant_Id">Update</a></li>
+
+            <li><a class="delete"style="color:#ab2020;" href="/Plant/DeleteConfirm/@Model.SelectedPlant.Plant_Id">Delete</a></li>
+                    }
+                }
+        </ul>
+    </nav>
+
+    <div class="row">
+
+        <div class="col-md-6 col-sm-12">
+            <div>Feature: @Model.SelectedPlant.Plant_Name</div>
+        </div>
+  
+
+        <div>
+            <h5>This plant can be found at the following trails:</h5>
+            @foreach (var trail in Model.TrailPlants)
+            {
+                <a href="/Trail/Details/@trail.TrailID">@trail.TrailName</a>
+            }
+        </div>
+
+  </div>
+
+
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        h2 {
+            color: #006400;
+            margin-bottom: 20px;
+        }
+
+        h5 {
+            color: #006400;
+            margin-bottom: 10px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .col-md-6 {
+            width: 50%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #d3e5d8;
+            color: #006400;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            list-style-type: none;
+        }
+
+            .btn:hover {
+                background-color: #b1d2ac;
+            }
+
+        .nav {
+            margin-bottom: 20px;
+        }
+
+            .nav ul {
+                list-style-type: none;
+                padding: 0;
+            }
+
+            .nav li {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+        .delete {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e8c6c6;
+            color: #ab2020;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            list-style-type: none;
+        }
+
+            .delete:hover {
+                background-color: #dca5a5;
+            }
+
+        a {
+            color: #006400;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: none;
+            }
+    </style>

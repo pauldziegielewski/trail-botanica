@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Collab_Project.Models.DesignDto>
+@{
+    ViewBag.Title = "ListDesigns";
+}
+
+<h1>List Designs</h1>
+
+<a href="/Design/New">New Design</a>
+@foreach (var design in Model)
+{
+
+    <h3><a href="/Design/DesignDetails/@design.Design_Id">@design.Description</a></h3>
+
+}
+
+
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        color: #333;
+        padding: 20px;
+    }
+
+    h1 {
+        color: #006400;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        color: #006400;
+        margin-bottom: 10px;
+    }
+
+    a {
+        color: #006400;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: #ab2020;
+        }
+</style>

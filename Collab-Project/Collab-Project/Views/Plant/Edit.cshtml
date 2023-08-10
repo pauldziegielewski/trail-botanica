@@ -1,0 +1,64 @@
+﻿﻿@model Collab_Project.Models.PlantDto
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Update Plant</h2>
+
+<nav>
+    <ul>
+        <li><a href="/Plant/ListPlants">Go back to list</a></li>
+
+        <li><a style="color:#ab2020;" href="/Plant/DeleteConfirm/@Model.Plant_Id">Delete</a></li>
+    </ul>
+</nav>
+
+<form action="/Plant/UpdatePlant/@Model.Plant_Id" method="POST">
+
+    <div style="display:none;">
+        @* Pass through the Plant ID *@
+        <input type="text" name="Plant_Id" value="@Model.Plant_Id" />
+    </div>
+
+    <div>
+        <label>Plant Name:</label> <input type="text" name="Plant_Name" value="@Model.Plant_Name" />
+    </div>
+
+    <div>
+        <input type="submit" value="Update Plant" />
+    </div>
+
+</form>
+
+
+
+
+
+
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    h1 {
+        color: #006400;
+        margin-bottom: 20px;
+    }
+
+    h4 {
+        color: #006400;
+        margin-bottom: 10px;
+    }
+
+    a {
+        color: #006400;
+        text-decoration: none;
+    }
+
+        a:hover {
+            color: #ab2020;
+        }
+</style>
