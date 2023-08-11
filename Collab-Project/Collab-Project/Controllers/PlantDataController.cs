@@ -16,6 +16,19 @@ namespace Collab_Project.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
+
+
+
+
+        /// <summary>
+        /// Returns all plants in the system.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all plants in the database, including their associated trail.
+        /// </returns>
+        /// <example>
         // GET: api/PlantData/ListPlants
         [HttpGet]
         public IEnumerable<PlantDto> ListPlants()
@@ -132,6 +145,10 @@ namespace Collab_Project.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+
+
+
+       
         // POST: api/UpdatePlant
         [ResponseType(typeof(Plant))]
         [HttpPost]

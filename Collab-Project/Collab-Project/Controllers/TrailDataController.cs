@@ -19,10 +19,16 @@ namespace Collab_Project.Controllers
 
         // ----------------------- LIST TRAILS----------
         /// <summary>
-        /// 
+        /// Returns all trail in the system.
         /// </summary>
-        /// <returns></returns>
-        // GET: api/TrailData/ListTrails
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all trails in the database, including their associated location.
+        /// </returns>
+        /// <example>
+        /// GET: api/TrailData/ListTrails
+        /// </example>
+       
         [HttpGet]
         public IEnumerable<TrailDto> ListTrails()
         {
@@ -168,10 +174,15 @@ namespace Collab_Project.Controllers
 
         // ------------------------------ FIND TRAIL --------
         /// <summary>
-        /// 
+        /// Returns a particular trail in the system.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: A trail in the system matching up to the trail ID primary key
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <param name="id">The primary key of the trail</param>
         // GET: api/TrailData/FindTrail/5
         [HttpGet]
         [ResponseType(typeof(TrailDto))]
@@ -196,7 +207,7 @@ namespace Collab_Project.Controllers
 
         // --------------------- UPDATE TRAIL----------------
         /// <summary>
-        /// 
+        /// Updates a particular trail in the system with POST data input
         /// </summary>
         /// <param name="id"></param>
         /// <param name="trail"></param>
@@ -249,7 +260,7 @@ namespace Collab_Project.Controllers
 
         // -------------------------------- ADD TRAIL--------
         /// <summary>
-        /// 
+        /// Allows the ability to add a new trail into the database
         /// </summary>
         /// <param name="trail"></param>
         /// <returns></returns>
@@ -275,11 +286,19 @@ namespace Collab_Project.Controllers
 
         // ----------------------- DELETE TRAIL -------------
         /// <summary>
-        /// 
+        /// Deletes an trail from the system by it's ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        // DELETE: api/TrailData/DeleteTrail/5
+        /// <param name="id">The primary key of the trail</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+         // DELETE: api/TrailData/DeleteTrail/5
+        /// FORM DATA: (empty)
+        /// </example>
+      
         //curl -d "" https://localhost:44376/api/traildata/deletetrail/1 is the alternative in command prompt
         [ResponseType(typeof(Trail))]
         [HttpPost]
