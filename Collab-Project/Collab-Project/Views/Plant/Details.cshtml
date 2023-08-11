@@ -35,7 +35,7 @@
             <h5>This plant can be found at the following trails:</h5>
             @foreach (var trail in Model.TrailPlants)
             {
-                <a href="/Trail/Details/@trail.TrailID">@trail.TrailName</a>
+                <a class="lists" href="/Trail/Details/@trail.TrailID">@trail.TrailName</a>
             }
         </div>
 
@@ -43,6 +43,22 @@
 
 
     <style>
+
+        .lists {
+            background-color: #c5e1a5; /* Soft green similar to leaves */
+            border-radius: 8px;
+            padding: 10px 16px;
+            text-decoration: none;
+            color: #333; /* Dark gray for text */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+            display: inline-block; /* Prevent block-level behavior */
+        }
+
+            .lists:hover {
+                background-color: #82b1ff; /* Sky blue on hover */
+                color: #fff; /* White text on hover */
+                transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+            }
         body {
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;

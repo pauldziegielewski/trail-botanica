@@ -47,7 +47,7 @@
         <h2>Plants in this trail @Model.SelectedTrail.TrailName</h2>
         @foreach (var plant in Model.AvailablePlants)
         {
-<a href="/Plant/Details/@plant.Plant_Id">@plant.Plant_Name</a>            }
+<a class="lists"href="/Plant/Details/@plant.Plant_Id">@plant.Plant_Name</a>            }
     </div>
 
     <div>
@@ -55,16 +55,6 @@
         @foreach (var feature in Model.AvailableFeatures)
         {
 <a href="/Feature/Details/@feature.FeatureID">@feature.FeatureName</a>            }
-    </div>
-
-    <div>
-        Add new Feature @Model.SelectedTrail.TrailName
-        <select name="FeatureID">
-            @foreach (var feature in Model.AFeatures)
-            {
-<option value="@feature.FeatureID">@feature.FeatureName</option>            }
-        </select>
-        <input type="submit" value="Associate Feature" />
     </div>
 
 
@@ -90,6 +80,23 @@
 
 
 <style>
+
+    .lists {
+        background-color: #c5e1a5; /* Soft green similar to leaves */
+        border-radius: 8px;
+        padding: 10px 16px;
+        text-decoration: none;
+        color: #333; /* Dark gray for text */
+        transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+        display: inline-block; /* Prevent block-level behavior */
+    }
+
+        .lists:hover {
+            background-color: #82b1ff; /* Sky blue on hover */
+            color: #fff; /* White text on hover */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+        }
+
     body {
         background-color: #f0f0f0;
         font-family: Arial, sans-serif;
