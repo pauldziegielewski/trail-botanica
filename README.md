@@ -50,11 +50,11 @@ The project is structured as follows:
 
 The API exposes the following endpoints:
 
-- `GET /api/plants`: List all plants in the database.
-- `GET /api/plants/{id}`: Find a specific plant by its ID.
-- `POST /api/plants`: Create a new plant in the database.
-- `PUT /api/plants/{id}`: Update a plant's information by its ID.
-- `DELETE /api/plants/{id}`: Delete a plant by its ID.
+- `GET /api/plant/listplants`: List all plants in the database.
+- `GET /api/plants/findplant/{id}`: Find a specific plant by its ID.
+- `POST /api/plants/addplant`: Create a new plant in the database.
+- `PUT /api/plants/updateplant{id}`: Update a plant's information by its ID.
+- `DELETE /api/plants/deleteplant/{id}`: Delete a plant by its ID.
 
 - `GET /api/designs`: List all designs in the database.
 - `GET /api/designs/{id}`: Find a specific design by its ID.
@@ -62,17 +62,17 @@ The API exposes the following endpoints:
 - `PUT /api/designs/{id}`: Update a design's information by its ID.
 - `DELETE /api/designs/{id}`: Delete a design by its ID.
 
-- `GET /api/trails`: List all trails in the database.
-- `GET /api/trails/{id}`: Find a specific trail by its ID.
-- `POST /api/trails`: Create a new trail in the database.
-- `PUT /api/trails/{id}`: Update a trail's information by its ID.
-- `DELETE /api/trails/{id}`: Delete a trail by its ID.
+- `GET /api/trails/listtrails`: List all trails in the database.
+- `GET /api/trails/findtrail/{id}`: Find a specific trail by its ID.
+- `POST /api/trails/addtrail`: Create a new trail in the database.
+- `PUT /api/trails/{updatetrail/id}`: Update a trail's information by its ID.
+- `DELETE /api/trails/deletetrail/{id}`: Delete a trail by its ID.
 
-- `GET /api/features`: List all features in the database.
-- `GET /api/features/{id}`: Find a specific feature by its ID.
-- `POST /api/features`: Create a new feature in the database.
-- `PUT /api/features/{id}`: Update a feature's information by its ID.
-- `DELETE /api/features/{id}`: Delete a feature by its ID.
+- `GET /api/features/listfeatures`: List all features in the database.
+- `GET /api/features/findfeature/{id}`: Find a specific feature by its ID.
+- `POST /api/features/addfeature`: Create a new feature in the database.
+- `PUT /api/features/updatefeature/{id}`: Update a feature's information by its ID.
+- `DELETE /api/features/deletefeature/{id}`: Delete a feature by its ID.
 
 ### Data Models
 
