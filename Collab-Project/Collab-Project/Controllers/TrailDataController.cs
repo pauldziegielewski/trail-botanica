@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Collab_Project.Models;
@@ -16,6 +19,7 @@ namespace Collab_Project.Controllers
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();
+
 
         // ----------------------- LIST TRAILS----------
         /// <summary>
@@ -28,9 +32,10 @@ namespace Collab_Project.Controllers
         /// <example>
         /// GET: api/TrailData/ListTrails
         /// </example>
-       
+
         [HttpGet]
-        public IEnumerable<TrailDto> ListTrails()
+        [ResponseType(typeof(TrailDto))]
+        public IHttpActionResult ListTrails()
         {
             List<Trail> Trails = db.Trails.ToList();
             List<TrailDto> TrailDtos = new List<TrailDto>();
@@ -39,13 +44,15 @@ namespace Collab_Project.Controllers
             {
                 TrailID = a.TrailID,
                 TrailName = a.TrailName,
+                TrailHasPic = a.TrailHasPic,
+                PicExtension = a.PicExtension,
                 LocationID = a.LocationID,
                 LocationName = a.Location.LocationName
 
 
             }));
 
-            return TrailDtos;
+            return Ok(TrailDtos);
 
         }
 
@@ -64,15 +71,16 @@ namespace Collab_Project.Controllers
         [HttpGet]
         [ResponseType(typeof(TrailDto))]
 
-        public IHttpActionResult ListTrailsForLocation(int? id) {
+        public IHttpActionResult ListTrailsForLocation(int? id)
+        {
 
             if (id == null)
             {
                 return BadRequest("Location ID is required");
             }
-        
 
-            List<Trail> Trails = db.Trails.Where(a=>a.LocationID==id).ToList();
+
+            List<Trail> Trails = db.Trails.Where(a => a.LocationID == id).ToList();
             List<TrailDto> TrailDtos = new List<TrailDto>();
 
             Trails.ForEach(a => TrailDtos.Add(new TrailDto()
@@ -90,10 +98,6 @@ namespace Collab_Project.Controllers
         }
 
 
-
-
-
-
         // ----------------------------------------------------------------- LIST TRAILS Associated with FEATURES----------
         /// <summary>
         /// Gathers trails that are assocaited with a particular feature
@@ -106,7 +110,7 @@ namespace Collab_Project.Controllers
         /// <example>
         /// GET: api/traildata/ListTrailFeatures
         /// </example>
-   
+
         [HttpGet]
         [ResponseType(typeof(TrailDto))]
         public IHttpActionResult ListTrailFeatures(int id)
@@ -114,7 +118,7 @@ namespace Collab_Project.Controllers
             //All trails that match with a particular feature
             List<Trail> Trails = db.Trails.Where(
                 t => t.Features.Any(
-                    f=>f.FeatureID==id
+                    f => f.FeatureID == id
                     )).ToList();
             List<TrailDto> TrailDtos = new List<TrailDto>();
 
@@ -160,8 +164,8 @@ namespace Collab_Project.Controllers
             {
                 TrailID = a.TrailID,
                 TrailName = a.TrailName,
-              //  LocationID = a.LocationID,
-              //  LocationName = a.Location.LocationName
+                //  LocationID = a.LocationID,
+                //  LocationName = a.Location.LocationName
 
 
             }));
@@ -195,11 +199,13 @@ namespace Collab_Project.Controllers
             {
                 TrailID = a.TrailID,
                 TrailName = a.TrailName,
+                TrailHasPic = a.TrailHasPic,
+                PicExtension = a.PicExtension,
                 LocationID = a.Location.LocationID,
                 LocationName = a.Location.LocationName
 
             }));
-            
+
 
             return Ok(TrailDtos.FirstOrDefault(t => t.TrailID == id));
         }
@@ -223,6 +229,7 @@ namespace Collab_Project.Controllers
         //curl -d @trail.json -H "Content-type:application/json" https://localhost:44376/api/traildata/updatetrail/1
         [ResponseType(typeof(void))]
         [HttpPost]
+
         public IHttpActionResult UpdateTrail(int id, Trail trail)
         {
             if (!ModelState.IsValid)
@@ -236,6 +243,10 @@ namespace Collab_Project.Controllers
             }
 
             db.Entry(trail).State = EntityState.Modified;
+            db.Entry(trail).Property(a => a.TrailHasPic).IsModified = false;
+            db.Entry(trail).Property(a => a.PicExtension).IsModified = false;
+
+
 
             try
             {
@@ -255,7 +266,7 @@ namespace Collab_Project.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-       
+
 
 
         // -------------------------------- ADD TRAIL--------
@@ -295,10 +306,10 @@ namespace Collab_Project.Controllers
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-         // DELETE: api/TrailData/DeleteTrail/5
+        // DELETE: api/TrailData/DeleteTrail/5
         /// FORM DATA: (empty)
         /// </example>
-      
+
         //curl -d "" https://localhost:44376/api/traildata/deletetrail/1 is the alternative in command prompt
         [ResponseType(typeof(Trail))]
         [HttpPost]
@@ -310,14 +321,20 @@ namespace Collab_Project.Controllers
                 return NotFound();
             }
 
+            if (trail.TrailHasPic && trail.PicExtension != "")
+            {
+                string path = HttpContext.Current.Server.MapPath("~/Content/Images/" + id + "." + trail.PicExtension);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+            }
+
             db.Trails.Remove(trail);
             db.SaveChanges();
 
-            return Ok(trail);
+            return Ok();
         }
-
-
-
 
         protected override void Dispose(bool disposing)
         {
@@ -333,6 +350,8 @@ namespace Collab_Project.Controllers
             return db.Trails.Count(e => e.TrailID == id) > 0;
         }
 
+
+        //******************************************************
         /// <summary>
         /// Associates a particular feature with a particular trail
         /// </summary>
@@ -347,7 +366,7 @@ namespace Collab_Project.Controllers
         [Route("api/traildata/AssociateTrailWithFeature")]
         public IHttpActionResult AssociateTrailWithFeature(int TrailID, int FeatureID)
         {
-            Trail SelectedTrail = db.Trails.Include(t => t.Features).Where(t=>t.TrailID == TrailID).FirstOrDefault();
+            Trail SelectedTrail = db.Trails.Include(t => t.Features).Where(t => t.TrailID == TrailID).FirstOrDefault();
 
             Feature SelectedFeature = db.Features.Find(FeatureID);
 
@@ -385,5 +404,96 @@ namespace Collab_Project.Controllers
             db.SaveChanges();
             return Ok();
         }
+
+        // *****************************************************
+        /// <summary>
+        /// Receives trail picture data, uploads it to the webserver and updates the trail's HasPic option
+        /// </summary>
+        /// <param name="id">the trail id</param>
+        /// <returns>status code 200 if successful.</returns>
+        /// <example>
+        /// curl -F trailpic=@file.jpg "https://localhost:xx/api/traildata/uploadtrialpic/2"
+        /// POST: api/animalData/UpdateTrailPic/3
+        /// HEADER: enctype=multipart/form-data
+        /// FORM-DATA: image
+        /// </example>
+
+        [HttpPost]
+        public IHttpActionResult UploadTrailPic(int id)
+        {
+            bool haspic = false;
+            string picextension;
+       
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                Debug.WriteLine("Received multipart form data.");
+
+                int numfiles = HttpContext.Current.Request.Files.Count;
+                Debug.WriteLine("Files Received: " + numfiles);
+
+                //Check if a file is posted
+                if (numfiles == 1 && HttpContext.Current.Request.Files[0] != null)
+                {
+                    var TrailPic = HttpContext.Current.Request.Files[0];
+                    //Check if the file is empty
+                    if (TrailPic.ContentLength > 0)
+                    {
+                        //establish valid file types (can be changed to other file extensions if desired!)
+                        var valtypes = new[] { "jpeg", "jpg", "png", "gif" };
+                        var extension = Path.GetExtension(TrailPic.FileName).Substring(1);
+                        //Check the extension of the file
+                        if (valtypes.Contains(extension))
+                        {
+                            try
+                            {
+                                //file name is the id of the image
+                                string fn = id + "." + extension;
+
+                                //get a direct file path to ~/Content/Trails/{id}.{extension}
+                                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/Content/Images/"), fn);
+
+                                //save the file
+                                TrailPic.SaveAs(path);
+                                picextension = extension;
+                                
+
+ 
+
+                                //Update the animal haspic and picextension fields in the database
+                                Trail Selectedtrail = db.Trails.Find(id);
+                                Selectedtrail.TrailHasPic = haspic;
+                                    Selectedtrail.PicExtension = extension;
+                         
+                                db.Entry(Selectedtrail).State = EntityState.Modified;
+
+                                db.SaveChanges();
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine("trail Image was not saved successfully.");
+                                Debug.WriteLine("Exception:" + ex);
+                                return BadRequest();
+                            }
+                        }
+                    }
+
+                }
+
+                return Ok();
+            }
+            else
+            {
+                //not multipart form data
+                return BadRequest();
+
+            }
+
+        }
+
+
+
+
+
     }
 }

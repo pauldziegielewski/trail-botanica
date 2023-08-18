@@ -12,7 +12,8 @@ namespace Collab_Project.Models
         [Key]
         public int TrailID { get; set; }
         public string TrailName { get; set; }
-
+        public string PicExtension { get; set; }
+        public bool TrailHasPic { get; set; }
 
         //A TRAIL BELONGS TO (ONE) LOCATION
         //A LOCATION CAN HAVE (MULTIPLE) TRAILS
@@ -37,7 +38,11 @@ namespace Collab_Project.Models
         public int LocationID { get; set; }
         public string LocationName { get; set; }
 
-        public bool TrailHasPic { get; set; }
+
+        //data needed for keeping track of animals images uploaded
+        //images deposited into /Content/Images/{id}.{extension}
+    
         public string PicExtension { get; set; }
+        public bool TrailHasPic { get; set; }
     }
 }

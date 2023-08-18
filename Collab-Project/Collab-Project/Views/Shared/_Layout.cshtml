@@ -7,9 +7,37 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
+    <link href="@Url.Content("~/Content/styles.css")" rel="stylesheet" type="text/css" />
+
+    <style>
+        .bg-admin {
+            background-color: powderblue;
+        }
+
+        .bg-dark {
+            background-color: ivory !important;
+    
+        }
+     
+
+    </style>
+
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+    @{
+
+        // Determine if the user is an admin
+        bool isAdmin = false;  // Initialize as false by default
+        if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            isAdmin = true;
+        }
+
+        // Define the class for the navigation bar based on admin status
+        string navClass = isAdmin ? "bg-admin" : "bg-dark";
+    }
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm @navClass admin-link">
+
         <div class="container">
             @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
@@ -18,7 +46,7 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="admin-link">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Trail", "List", "Trail", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Location", "ListLocations", "Location", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Plant", "ListPlants", "Plant", new { area = "" }, new { @class = "nav-link" })</li>
@@ -39,4 +67,6 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
+
+
 </html>

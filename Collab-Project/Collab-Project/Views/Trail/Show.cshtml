@@ -4,79 +4,50 @@
     ViewBag.Title = "View";
 }
 
-
 <h2>@Model.SelectedTrail.TrailName</h2>
 
-
-<nav class="nav">
+<nav>
     <ul>
-
         <li class="back"><a href="/Trail/List">Go back to list</a></li>
-        @{
-            if (Model.IsAdmin)
-            {
-                <li class="update"><a href="/Trail/Edit/@Model.SelectedTrail.TrailID">Update</a></li>
-
-                <li class="delete"><a style="color:#ab2020;" href="/Trail/DeleteConfirm/@Model.SelectedTrail.TrailID">Delete</a></li>
-            }
+        @if (Model.IsAdmin)
+        {
+            <li class="update admin-link"><a href="/Trail/Edit/@Model.SelectedTrail.TrailID">Update</a></li>
+            <li class="delete admin-link"><a style="color:#ab2020;" href="/Trail/DeleteConfirm/@Model.SelectedTrail.TrailID">Delete</a></li>
         }
-
 
     </ul>
 </nav>
 
 
+
 <div class="row">
-
     <div class="col-md-6 col-sm-12">
-
-        @{ string imageurl = "/Content/Images/Trails/default.jpg";
-                        if (Model.SelectedTrail.TrailHasPic)
-                        {
-                            imageurl = "/Content/Images/Trails/" + Model.SelectedTrail.TrailID + "." + Model.SelectedTrail.PicExtension;
-                        } }
+        @{
+            string imageurl = "/Content/mono.jpg";
+            if (Model.SelectedTrail.TrailHasPic)
+            {
+               imageurl = "/Content/Images/" + Model.SelectedTrail.TrailID + "." + Model.SelectedTrail.PicExtension;
+            }
+        }
 
         <div>
-            <img style="display:block; max-width:100%;" alt="@Model.SelectedTrail.TrailName" src="@imageurl" />
+            <img style="display:block; max-width:100%;" alt="@Model.SelectedTrail.TrailName" 
+                 src="@imageurl" />
         </div>
 
         <a href="@Url.Action("LocationDetails", "Location", new { id = Model.SelectedTrail.LocationID })">@Model.SelectedTrail.LocationName</a>
-
     </div>
+
     <div>
-        <h2>Plants in this trail @Model.SelectedTrail.TrailName</h2>
+        <h2>Plants in @Model.SelectedTrail.TrailName</h2>
         @foreach (var plant in Model.AvailablePlants)
         {
-<a class="lists"href="/Plant/Details/@plant.Plant_Id">@plant.Plant_Name</a>            }
+            <a class="lists" href="/Plant/Details/@plant.Plant_Id">@plant.Plant_Name</a>
+        }
+
+
     </div>
-
-    <div>
-        <h2>Features in this trail @Model.SelectedTrail.TrailName</h2>
-        @foreach (var feature in Model.AvailableFeatures)
-        {
-<a href="/Feature/Details/@feature.FeatureID">@feature.FeatureName</a>            }
-    </div>
-
-
-    <div class="col-md-6 col-sm-12">
-        <h4>Trails in this location: @Model.SelectedTrail.TrailName</h4>
-
-
-        <div>
-
-            <form method="POST" action="/Trail/Associate/@Model.SelectedTrail.TrailID">
-                <select name="FeatureID">
-                    <option value="">Select Feature</option>
-
-                </select>
-                <input type="submit" value="Add Feature" />
-            </form>
-
-        </div>
-    </div>
-
 </div>
-
 
 
 <style>
@@ -102,6 +73,7 @@
         font-family: Arial, sans-serif;
         color: #333;
     }
+
 
     h2 {
         color: #006400;

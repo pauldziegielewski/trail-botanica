@@ -5,7 +5,8 @@
 }
 
 <h2>Update Trail</h2>
-<form action="/Trail/Update/@Model.SelectedTrail.TrailID" method="POST">
+
+<form action="/Trail/Update/@Model.SelectedTrail.TrailID" method="POST" enctype="multipart/form-data">
 
     <div style="display:none;">
         @* Pass through the trail ID *@
@@ -21,7 +22,7 @@
         <select name="LocationID">
             @foreach (var Location in Model.LocationOptions)
             {
-                string selected = "";
+                var selected = "";
                 if (Location.LocationID == Model.SelectedTrail.LocationID)
                 {
                     selected = "selected";
@@ -29,10 +30,17 @@
                 <option value="@Location.LocationID" >@Location.LocationName</option>
             }
         </select>
-    </div>
+        </div>
+   
+
+        <div class="trail-pic">
+            <label>Trail Picture</label>
+            <input type="file" name="TrailPic"/>
+        </div>
+  
 
     <div>
-        <input type="submit" value="Update Location" />
+        <input type="submit" value="Update Trail" />
     </div>
 
 </form>

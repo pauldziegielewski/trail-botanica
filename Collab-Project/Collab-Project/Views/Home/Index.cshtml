@@ -3,27 +3,85 @@
 }
 
 <main>
-    <section class="row" aria-labelledby="trialBotanicaTitle">
+
+
+    <section class="row heading" aria-labelledby="trialBotanicaTitle">
+
+
         <h1 id="title">Welcome to Trial Botanica</h1>
-        <p class="lead">Explore the beauty of nature and technology coming together in our collaborative project.</p>
+        <p>Explore the beauty of nature and technology coming together in our collaborative project.</p>
         <p><a href="#" class="btn btn-primary btn-md">Discover more &raquo;</a></p>
+
+
     </section>
 
     <div class="row">
-        <section class="col-md-4" aria-labelledby="plantsDesignsTitle">
+
+        <section class="col-md-4 box" aria-labelledby="plantsDesignsTitle">
             <h2 id="plantsDesignsTitle">Plants and Designs</h2>
-            <p>Experience a rich collection of plants paired with creative designs that bring nature closer to you.</p>
+            <p class="lead">Experience a rich collection of plants paired with creative designs that bring nature closer to you.</p>
+            <img class="img-load" src="~/Content/Images/trillium.jpg" />
             <p><a class="btn btn-outline-dark" href="#">Explore &raquo;</a></p>
         </section>
-        <section class="col-md-4" aria-labelledby="trailsLocationsTitle">
+
+        <section class="col-md-4 box" aria-labelledby="trailsLocationsTitle">
             <h2 id="trailsLocationsTitle">Trails and Locations</h2>
-            <p>Embark on scenic trails, discover beautiful locations, and immerse yourself in the wonders of nature.</p>
+            <p class="lead">Embark on scenic trails, discover beautiful locations, and immerse yourself in the wonders of nature.</p>
+            <img class="img-load" src="~/Content/Images/mono.jpg" />
             <p><a class="btn btn-outline-dark" href="#">Discover &raquo;</a></p>
         </section>
-        <section class="col-md-4" aria-labelledby="featuresHostingTitle">
+
+        <section class="col-md-4 box" aria-labelledby="featuresHostingTitle">
             <h2 id="featuresHostingTitle">Features and Hosting</h2>
-            <p>Learn about unique features that enhance your experience and find the perfect hosting solutions for your projects.</p>
+            <p class="lead">Learn about unique hiking features that will enhance your hiking experience.</p>
+            <img class="img-load"src="~/Content/Images/waterfall.jpg"/>
             <p><a class="btn btn-outline-dark" href="#">Learn more &raquo;</a></p>
         </section>
+
     </div>
 </main>
+
+<style>
+    .lead {
+        background-color: mediumaquamarine;
+        padding: 30px;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+  
+    .img-load {
+        width: 410px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 8px;
+        justify-self: center;
+        display: flex;
+    }
+    .box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+       
+    }
+    .heading {
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: mediumaquamarine;
+        text-align: center;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+
+        
+ 
+    }
+    main {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+</style>
