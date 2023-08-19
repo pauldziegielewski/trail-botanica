@@ -18,6 +18,7 @@ TrialBotanica is an application that provides data on plants along with their de
   - [Data Models](#data-models)
   - [Associations](#associations)
 - [Contributing](#contributing)
+- [Special Mentions](#special-mentions)
 - [License](#license)
 
 ## Getting Started
@@ -97,6 +98,9 @@ We welcome contributions to this project! To contribute, please follow these ste
 4. Create a pull request to the main repository.
 
 Please ensure that your code follows the coding standards and includes appropriate unit tests.
+
+## Special Mentions
+We would like to thank Dhaval Shah, our classmate for helping us with issues whenever we had to fix. We would also like to thank Christine Bittle, our course co-ordinator for guiding and giving us feedback on building up this project.
 
 ## License
 
